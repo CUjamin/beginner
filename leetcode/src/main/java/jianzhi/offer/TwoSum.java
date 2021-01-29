@@ -51,6 +51,7 @@ public class TwoSum {
         if(secondValue>nums[middle+1]){
             return secondValue;
         }
+
         return nums[start]-1;
     }
 
