@@ -1,5 +1,8 @@
 package jianzhi.offer;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class TwoSum {
     /**
      * 输入一个递增排序的数组和一个数字s，在数组中查找两个数，使得它们的和正好是s。如果有多对数字的和等于s，则输出任意一对即可。
@@ -23,36 +26,57 @@ public class TwoSum {
      */
     public int[] twoSum(int[] nums, int target) {
         int[] twoNum = new int[2];
-        for(int no1=0;no1<nums.length-1;no1++){
+        Set<Integer> numSet = new HashSet<>();
+        for(int num:nums){
+            int tempTarget = target-num;
+            if(numSet.contains(tempTarget)){
+                twoNum[0] = num;
+                twoNum[1] = tempTarget;
+                break;
+            }
+            numSet.add(num);
+        }
+
+        return twoNum;
+    }
+    public int[] twoSum2(int[] nums, int target) {
+        int[] twoNum = new int[2];
+        int no1 = 0;
+        while(nums[no1]<=(target/2)){
             int numValue1 = nums[no1];
-            int numValue2 = binarySearchValue(no1,nums.length,nums,target);
-            if((numValue1+numValue2)==target){
-                twoNum[0] = numValue1;
-                twoNum[1] = numValue2;
-                return twoNum;
+            int tempTargetValue = target-numValue1;
+            int numValue2 = binarySearchValue(no1,nums.length,nums,tempTargetValue);
+            if(numValue2<numValue1){
+                no1++;
+                continue;
+            }else {
+                twoNum[0]=numValue1;
+                twoNum[1]=numValue2;
+                break;
             }
         }
         return twoNum;
     }
 
-    public int binarySearchValue(int start,int end,int[] nums, int target){
-        if(start>=end){
-            return nums[start]-1;
+    public int binarySearchValue(int start,int end,int[] nums, int tempTargetValue){
+        int tempStart = start;
+        int tempEnd = end;
+        int resultValue = nums[start]-1;
+        while (tempStart<tempEnd){
+            int tempMiddle = tempStart+(tempEnd-tempStart)/2;
+            if(tempTargetValue==nums[tempMiddle]){
+                return nums[tempMiddle];
+            }
+            if(tempTargetValue<nums[tempMiddle]){
+                tempEnd = tempMiddle;
+                continue;
+            }
+            if(tempTargetValue>nums[tempMiddle]){
+                tempStart = tempMiddle;
+                continue;
+            }
         }
-        int middle = (end-start)/2;
-        if((nums[start]+nums[middle])==target){
-            return nums[middle];
-        }
-        int firstValue = binarySearchValue(start,middle,nums,target);
-        if(firstValue>nums[start]){
-            return firstValue;
-        }
-        int secondValue = binarySearchValue(middle+1,end,nums,target);
-        if(secondValue>nums[middle+1]){
-            return secondValue;
-        }
-
-        return nums[start]-1;
+        return resultValue;
     }
 
     public static void main(String[] args) {
