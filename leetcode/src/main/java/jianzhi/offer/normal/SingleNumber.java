@@ -1,8 +1,11 @@
-package jianzhi.offer;
+package jianzhi.offer.normal;
 
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author cujamin
+ */
 public class SingleNumber {
     /**
      * 在一个数组 nums 中除一个数字只出现一次之外，其他数字都出现了三次。请找出那个只出现一次的数字。
