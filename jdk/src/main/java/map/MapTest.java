@@ -12,6 +12,7 @@ public class MapTest {
         newConcurrentHashMap.put("1", "1");
         String cvaule = newConcurrentHashMap.get("1");
         String value = newMap.get("1");
+
         return newMap;
     }
 }
